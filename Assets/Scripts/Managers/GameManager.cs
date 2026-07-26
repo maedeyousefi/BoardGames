@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public GameType SelectedGame;
 
     public int PlayerCount = 2;
+    public int CurrentPlayerTurn = 1;
 
     private void Awake()
     {
@@ -19,5 +20,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public void NextTurn()
+    {
+        CurrentPlayerTurn++;
+        if (CurrentPlayerTurn > PlayerCount)
+        {
+            CurrentPlayerTurn = 1;
+        }
+
+        Debug.Log("نوبت بازیکن: " + CurrentPlayerTurn);
     }
 }

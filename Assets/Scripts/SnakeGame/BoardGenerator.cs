@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class BoardGenerator : MonoBehaviour
 {
@@ -8,9 +9,10 @@ public class BoardGenerator : MonoBehaviour
 
     public int columns = 10;
     public int rows = 10;
-    public float cellSize = 150f;
+    public float cellSize = 100f;
+    public static Dictionary<int, Vector2> cellPositions = new Dictionary<int, Vector2>();
 
-    void Start()
+    void Awake()
     {
         GenerateBoard();
     }
@@ -18,11 +20,10 @@ public class BoardGenerator : MonoBehaviour
     void GenerateBoard()
     {
         int cellNumber = 1;
+        cellPositions.Clear();
 
         for (int row = 0; row < rows; row++)
         {
-            // اگه ردیف زوج بود، از چپ به راست بشمار
-            // اگه فرد بود، از راست به چپ بشمار (مارپیچی)
             bool isReversed = row % 2 == 1;
 
             for (int col = 0; col < columns; col++)
@@ -40,6 +41,9 @@ public class BoardGenerator : MonoBehaviour
 
                 TextMeshProUGUI numberText = newCell.GetComponentInChildren<TextMeshProUGUI>();
                 numberText.text = cellNumber.ToString();
+
+                // ذخیره موقعیت این خونه
+                cellPositions[cellNumber] = new Vector2(xPos, yPos);
 
                 cellNumber++;
             }

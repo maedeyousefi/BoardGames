@@ -6,19 +6,23 @@ public class DiceManager : MonoBehaviour
 {
     public Image diceImage;
     public Sprite[] diceFaces;
-
+    public Button rollButton;
     public float rollDuration = 1f;
     public float rotationSpeed = 720f;
-    public float bounceHeight = 80f;     // چقدر بالا بپره
-    public int bounceCount = 3;          // چند بار بالا-پایین بشه
+    public float bounceHeight = 80f;    
+    public int bounceCount = 3; 
 
     private int lastRoll;
     private bool isRolling = false;
     private Vector3 originalPosition;
+    private bool rollAvailable = false;
+
+
 
     void Start()
     {
         originalPosition = diceImage.transform.localPosition;
+        rollButton = GetComponent<Button>();
     }
 
     public void RollDice()
@@ -69,6 +73,9 @@ public class DiceManager : MonoBehaviour
         lastRoll = Random.Range(1, 7);
         diceImage.sprite = diceFaces[lastRoll - 1];
 
+        rollAvailable = true;
+        rollButton.interactable = false; // 👈 دکمه رو قفل کن
+
         Debug.Log("Player rolled: " + lastRoll);
 
         isRolling = false;
@@ -77,5 +84,19 @@ public class DiceManager : MonoBehaviour
     public int GetLastRoll()
     {
         return lastRoll;
+    }
+    public bool IsRollAvailable()
+    {
+        return rollAvailable;
+    }
+
+    public int ConsumeRoll()
+    {
+        rollAvailable = false;
+        return lastRoll;
+    }
+    public void EnableRoll()
+    {
+        rollButton.interactable = true; // 👈 دوباره باز کن
     }
 }
