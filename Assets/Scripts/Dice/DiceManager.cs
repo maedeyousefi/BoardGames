@@ -5,14 +5,25 @@ using UnityEngine.UI;
 public class DiceManager : MonoBehaviour
 {
     public Image diceImage;
-    public Sprite[] diceFaces; // اینجا 6 تا عکس رو به ترتیب میذاریم (dice1 تا dice6)
+    public Sprite[] diceFaces;
+
+    public float rollDuration = 1f;
+    public float rotationSpeed = 720f;
+    public float bounceHeight = 80f;     // چقدر بالا بپره
+    public int bounceCount = 3;          // چند بار بالا-پایین بشه
 
     private int lastRoll;
     private bool isRolling = false;
+    private Vector3 originalPosition;
+
+    void Start()
+    {
+        originalPosition = diceImage.transform.localPosition;
+    }
 
     public void RollDice()
     {
-        if (isRolling) return; // اگه در حال چرخیدنه، اجازه نده دوباره کلیک بشه
+        if (isRolling) return;
 
         StartCoroutine(RollAnimation());
     }
@@ -21,22 +32,42 @@ public class DiceManager : MonoBehaviour
     {
         isRolling = true;
 
-        float rollDuration = 2f; // چقدر طول بکشه چرخش (به ثانیه)
         float elapsed = 0f;
-        float interval = 0.07f; // هر چند ثانیه عکس عوض بشه
+        float interval = 0.07f;
+        float intervalTimer = 0f;
 
         while (elapsed < rollDuration)
         {
-            int randomFace = Random.Range(0, diceFaces.Length);
-            diceImage.sprite = diceFaces[randomFace];
+            // چرخش پیوسته
+            diceImage.transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
 
-            yield return new WaitForSeconds(interval);
-            elapsed += interval;
+            // محاسبه ارتفاع بالا-پایین (Bounce) که کم‌کم کمتر میشه
+            float progress = elapsed / rollDuration; // از 0 تا 1
+            float damping = 1f - progress; // هرچی جلوتر بریم، ارتفاع کمتر میشه
+            float bounce = Mathf.Abs(Mathf.Sin(progress * bounceCount * Mathf.PI)) * bounceHeight * damping;
+
+            diceImage.transform.localPosition = originalPosition + new Vector3(0f, bounce, 0f);
+
+            // عوض کردن عکس هر چند فریم یک‌بار
+            intervalTimer += Time.deltaTime;
+            if (intervalTimer >= interval)
+            {
+                int randomFace = Random.Range(0, diceFaces.Length);
+                diceImage.sprite = diceFaces[randomFace];
+                intervalTimer = 0f;
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-        // در آخر، عدد نهایی رو مشخص کن
-        lastRoll = Random.Range(1, 7); // بین 1 تا 6
-        diceImage.sprite = diceFaces[lastRoll - 1]; // چون آرایه از 0 شروع میشه
+        // برگردوندن به حالت اولیه (صاف و سرجاش)
+        diceImage.transform.rotation = Quaternion.identity;
+        diceImage.transform.localPosition = originalPosition;
+
+        // عدد نهایی
+        lastRoll = Random.Range(1, 7);
+        diceImage.sprite = diceFaces[lastRoll - 1];
 
         Debug.Log("Player rolled: " + lastRoll);
 
