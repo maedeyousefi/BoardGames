@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayerSetup.unity
     guid: 1210e75faeb796e44adc20a713de7de5
+  - enabled: 1
+    path: Assets/Scenes/SnakeGame.unity
+    guid: dcc600f725689b8499acc8956366118e
+  - enabled: 1
+    path: Assets/Scenes/LudoGame.unity
+    guid: 11868bda15513094f9a2aa8e5aba2737
   m_configObjects: {}
