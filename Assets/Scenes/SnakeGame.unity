@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943ba0447a71a6d4da2dd06f2c5d9038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceManager: {fileID: 0}
+  diceManager: {fileID: 1540649863}
   currentCell: 1
   playerNumber: 4
   moveSpeed: 0.2
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943ba0447a71a6d4da2dd06f2c5d9038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceManager: {fileID: 0}
+  diceManager: {fileID: 1540649863}
   currentCell: 1
   playerNumber: 3
   moveSpeed: 0.2
@@ -786,7 +786,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1297488376}
-  - component: {fileID: 1297488375}
+  - component: {fileID: 1297488377}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -794,21 +794,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1297488375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297488374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6de6439a42bf2994fbbf9938bd72d2dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SelectedGame: 0
-  PlayerCount: 2
-  CurrentPlayerTurn: 1
 --- !u!4 &1297488376
 Transform:
   m_ObjectHideFlags: 0
@@ -824,6 +809,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1297488377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297488374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa2d3d3d9b173b4e881761c5ef8546b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawnPlayer1: {fileID: 1177979718}
+  pawnPlayer2: {fileID: 976852794}
+  pawnPlayer3: {fileID: 833087222}
+  pawnPlayer4: {fileID: 138076279}
 --- !u!1 &1385864098
 GameObject:
   m_ObjectHideFlags: 0
