@@ -1187,9 +1187,29 @@ MonoBehaviour:
   ladders:
   - startCell: 4
     endCell: 25
+  - startCell: 34
+    endCell: 66
+  - startCell: 72
+    endCell: 92
+  - startCell: 63
+    endCell: 83
+  - startCell: 42
+    endCell: 61
+  - startCell: 86
+    endCell: 96
   snakes:
   - startCell: 33
     endCell: 13
+  - startCell: 44
+    endCell: 24
+  - startCell: 98
+    endCell: 58
+  - startCell: 94
+    endCell: 73
+  - startCell: 64
+    endCell: 45
+  - startCell: 38
+    endCell: 2
 --- !u!4 &1987910433
 Transform:
   m_ObjectHideFlags: 0
