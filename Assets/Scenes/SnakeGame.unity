@@ -1187,7 +1187,9 @@ MonoBehaviour:
   ladders:
   - startCell: 4
     endCell: 25
-  snakes: []
+  snakes:
+  - startCell: 33
+    endCell: 13
 --- !u!4 &1987910433
 Transform:
   m_ObjectHideFlags: 0
