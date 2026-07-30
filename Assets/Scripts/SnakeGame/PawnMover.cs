@@ -91,6 +91,25 @@ public class PawnMover : MonoBehaviour, IPointerClickHandler
             yield return StartCoroutine(MoveToPosition(targetPos));
         }
 
+        // بررسی مار یا نردبان
+        if (SnakeAndLadderManager.Instance.TryGetDestination(currentCell, out int destination))
+        {
+            // از خانه فعلی خارج شو
+            UnregisterFromCell(currentCell);
+            ArrangeCell(currentCell);
+
+            // برو به مقصد
+            currentCell = destination;
+
+            // وارد خانه مقصد شو
+            RegisterOnCell(currentCell);
+            ArrangeCell(currentCell);
+
+            Vector2 targetPos = BoardGenerator.cellPositions[currentCell] + currentOffset;
+
+            yield return StartCoroutine(MoveToPosition(targetPos));
+        }
+
         isMoving = false;
 
         diceManager.EnableRoll();
