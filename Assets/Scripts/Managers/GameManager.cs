@@ -46,4 +46,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player " + playerNumber + " Finished!");
         }
     }
+    public PawnMover GetCurrentPawn() 
+    { 
+        PawnMover[] pawns = FindObjectsOfType<PawnMover>();
+        foreach (PawnMover pawn in pawns) 
+        {
+            if (pawn.playerNumber == CurrentPlayerTurn)
+                return pawn;
+        } 
+        return null; 
+    }
 }
