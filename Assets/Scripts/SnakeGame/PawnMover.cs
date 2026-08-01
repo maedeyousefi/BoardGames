@@ -11,6 +11,7 @@ public class PawnMover : MonoBehaviour, IPointerClickHandler
 
     public float moveSpeed = 0.2f;
     public float hopHeight = 40f;
+    public bool HasFinished = false;
 
     private bool isMoving = false;
     private Vector2 currentOffset = Vector2.zero;
@@ -40,6 +41,12 @@ public class PawnMover : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (isMoving) return;
+
+        if (HasFinished)
+        {
+            Debug.Log("این بازیکن قبلاً به پایان رسیده.");
+            return;
+        }
 
         if (GameManager.Instance.CurrentPlayerTurn != playerNumber)
         {
@@ -111,6 +118,15 @@ public class PawnMover : MonoBehaviour, IPointerClickHandler
         }
 
         isMoving = false;
+
+        if (currentCell >= 100)
+        {
+            currentCell = 100;
+            HasFinished = true;
+            GameManager.Instance.RegisterFinishedPlayer(playerNumber);
+
+            Debug.Log($"Player {playerNumber} finished!");
+        }
 
         diceManager.EnableRoll();
         GameManager.Instance.NextTurn();
