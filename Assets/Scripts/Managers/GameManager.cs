@@ -56,4 +56,43 @@ public class GameManager : MonoBehaviour
         } 
         return null; 
     }
+    public int GetPlayerRank(int playerNumber)
+    {
+        return finishedPlayers.IndexOf(playerNumber) + 1;
+    }
+    public bool IsGameFinished()
+    {
+        if (PlayerCount == 2)
+            return finishedPlayers.Count >= 1;
+
+        if (PlayerCount == 3)
+            return finishedPlayers.Count >= 2;
+
+        if (PlayerCount == 4)
+            return finishedPlayers.Count >= 3;
+
+        return false;
+    }
+    public void FinishGame()
+    {
+        // اضافه کردن آخرین بازیکنی که هنوز تمام نکرده
+        for (int i = 1; i <= PlayerCount; i++)
+        {
+            if (!finishedPlayers.Contains(i))
+            {
+                finishedPlayers.Add(i);
+                break;
+            }
+        }
+
+        Debug.Log("===== GAME OVER =====");
+
+        for (int i = 0; i < finishedPlayers.Count; i++)
+        {
+            Debug.Log($"Rank {i + 1}: Player {finishedPlayers[i]}");
+        }
+
+        // فعلاً فقط لاگ می‌گیریم
+        // بعداً اینجا پنل برد را باز می‌کنیم.
+    }
 }

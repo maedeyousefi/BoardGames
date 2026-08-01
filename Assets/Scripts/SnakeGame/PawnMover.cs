@@ -123,9 +123,16 @@ public class PawnMover : MonoBehaviour, IPointerClickHandler
         {
             currentCell = 100;
             HasFinished = true;
+
             GameManager.Instance.RegisterFinishedPlayer(playerNumber);
 
             Debug.Log($"Player {playerNumber} finished!");
+
+            if (GameManager.Instance.IsGameFinished())
+            {
+                GameManager.Instance.FinishGame();
+                yield break;
+            }
         }
 
         diceManager.EnableRoll();
