@@ -91,8 +91,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log($"Rank {i + 1}: Player {finishedPlayers[i]}");
         }
-
-        // فعلاً فقط لاگ می‌گیریم
-        // بعداً اینجا پنل برد را باز می‌کنیم.
+        WinPanelManager.Instance.ShowWinPanel();
     }
 }
