@@ -20,14 +20,16 @@ public class WinPanelManager : MonoBehaviour
     { 
         switch (player) 
         { 
-            case 1: return " Blue";
-            case 2: return " Green";
-            case 3: return " Purple";
-            case 4: return " Orange";
+            case 1: return " Blue \n";
+            case 2: return " Green \n";
+            case 3: return " Purple \n";
+            case 4: return " Orange \n";
             default: return "Player " + player; } }
     public void ShowWinPanel()
     {
         winPanel.SetActive(true);
+
+        Time.timeScale = 0f;
 
         string result = "";
 
@@ -61,11 +63,19 @@ public class WinPanelManager : MonoBehaviour
     public void Replay() 
     { 
         Time.timeScale = 1f;
+
+        winPanel.SetActive(false);
+        GameManager.Instance.ResetGameData();
+        PawnMover.cellOccupants.Clear();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
     }
     public void MainMenu() 
     { 
         Time.timeScale = 1f;
+        winPanel.SetActive(false);
+        GameManager.Instance.ResetGameData();
+        PawnMover.cellOccupants.Clear();
         SceneManager.LoadScene("MainMenu"); 
     }
 }

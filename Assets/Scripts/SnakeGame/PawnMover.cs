@@ -192,10 +192,20 @@ public class PawnMover : MonoBehaviour, IPointerClickHandler
             occupants[i].currentOffset = offset;
 
             // اگه این مهره خودمون نیستیم (یعنی مهره‌ای که از قبل اونجا نشسته)، فوراً جاش رو عوض کن
+            // if (occupants[i] != this)
+            ///{
+            //   RectTransform otherRt = occupants[i].GetComponent<RectTransform>();
+            //  otherRt.anchoredPosition = basePos + offset;
+            //}
+            if (occupants[i] == null)
+                continue;
+
             if (occupants[i] != this)
             {
                 RectTransform otherRt = occupants[i].GetComponent<RectTransform>();
-                otherRt.anchoredPosition = basePos + offset;
+
+                if (otherRt != null)
+                    otherRt.anchoredPosition = basePos + offset;
             }
         }
     }

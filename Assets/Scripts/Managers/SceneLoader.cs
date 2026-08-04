@@ -10,12 +10,16 @@ public class SceneLoader : MonoBehaviour
 
     public void SelectSnakeGame()
     {
+        Debug.Log("Snake Button Clicked");
+
         GameManager.Instance.SelectedGame = GameType.Snake;
         LoadPlayerSetup();
     }
 
     public void SelectLudoGame()
     {
+        Debug.Log("Ludo Button Clicked");
+
         GameManager.Instance.SelectedGame = GameType.Ludo;
         LoadPlayerSetup();
     }

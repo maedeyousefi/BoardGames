@@ -93,4 +93,10 @@ public class GameManager : MonoBehaviour
         }
         WinPanelManager.Instance.ShowWinPanel();
     }
+    public void ResetGameData() 
+    { 
+        finishedPlayers.Clear();
+        CurrentPlayerTurn = 1; 
+       // consecutiveSixes = 0; 
+    }
 }
