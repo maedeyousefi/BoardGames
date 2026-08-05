@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip snake;
     public AudioClip ladder;
     public AudioClip win;
+    public Slider volumeSlider;
 
     private void Awake()
     {
@@ -31,5 +33,21 @@ public class AudioManager : MonoBehaviour
     {
         if (clip != null)
             sfxSource.PlayOneShot(clip);
+    }
+    public void SetSFXVolume(float volume)
+    {
+        Debug.Log("Volume = " + volume);
+        sfxSource.volume = volume;
+        PlayerPrefs.SetFloat("SFXVolume", volume);
+    }
+
+    private void Start()
+    {
+        float volume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
+        sfxSource.volume = volume;
+
+        if (volumeSlider != null)
+            volumeSlider.value = volume;
     }
 }
