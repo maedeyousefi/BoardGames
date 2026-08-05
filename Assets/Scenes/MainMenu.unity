@@ -426,6 +426,8 @@ GameObject:
   - component: {fileID: 423747211}
   - component: {fileID: 423747210}
   - component: {fileID: 423747209}
+  - component: {fileID: 423747212}
+  - component: {fileID: 423747213}
   m_Layer: 5
   m_Name: LudoButton
   m_TagString: Untagged
@@ -547,6 +549,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423747207}
   m_CullTransparentMesh: 1
+--- !u!114 &423747212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423747207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
+--- !u!114 &423747213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423747207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6079853a3688324ea39086e2e87270a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedScale: 0.95
 --- !u!1 &545151532
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +813,8 @@ GameObject:
   - component: {fileID: 588098900}
   - component: {fileID: 588098899}
   - component: {fileID: 588098898}
+  - component: {fileID: 588098901}
+  - component: {fileID: 588098902}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -905,6 +936,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588098896}
   m_CullTransparentMesh: 1
+--- !u!114 &588098901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588098896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
+--- !u!114 &588098902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588098896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6079853a3688324ea39086e2e87270a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedScale: 0.95
 --- !u!1 &595377280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,6 +1109,8 @@ GameObject:
   - component: {fileID: 598503553}
   - component: {fileID: 598503552}
   - component: {fileID: 598503551}
+  - component: {fileID: 598503554}
+  - component: {fileID: 598503555}
   m_Layer: 5
   m_Name: SnakeButton
   m_TagString: Untagged
@@ -1172,6 +1232,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598503549}
   m_CullTransparentMesh: 1
+--- !u!114 &598503554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598503549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
+--- !u!114 &598503555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598503549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6079853a3688324ea39086e2e87270a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedScale: 0.95
 --- !u!1 &644803741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,6 +1961,8 @@ GameObject:
   - component: {fileID: 1136189414}
   - component: {fileID: 1136189413}
   - component: {fileID: 1136189412}
+  - component: {fileID: 1136189415}
+  - component: {fileID: 1136189416}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -1995,6 +2084,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136189410}
   m_CullTransparentMesh: 1
+--- !u!114 &1136189415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136189410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
+--- !u!114 &1136189416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136189410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6079853a3688324ea39086e2e87270a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedScale: 0.95
 --- !u!1 &1364511889
 GameObject:
   m_ObjectHideFlags: 0

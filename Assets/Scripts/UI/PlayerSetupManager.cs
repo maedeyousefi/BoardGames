@@ -63,7 +63,10 @@ public class PlayerSetupManager : MonoBehaviour
             SceneManager.LoadScene("LudoGame");
         }
     }
-
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     private void ShowWarning()
     {
         warningPanel.SetActive(true);

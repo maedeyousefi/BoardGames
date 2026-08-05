@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        Invoke(nameof(ShowTurnMessage), 0.2f);
+    }
     public void NextTurn()
     {
         do
@@ -36,6 +40,7 @@ public class GameManager : MonoBehaviour
         } while (finishedPlayers.Contains(CurrentPlayerTurn));
 
         Debug.Log("نوبت بازیکن: " + CurrentPlayerTurn);
+        ShowTurnMessage();
     }
     public void RegisterFinishedPlayer(int playerNumber)
     {
@@ -98,5 +103,32 @@ public class GameManager : MonoBehaviour
         finishedPlayers.Clear();
         CurrentPlayerTurn = 1; 
        // consecutiveSixes = 0; 
+    }
+    private void ShowTurnMessage()
+    {
+        string playerName = "";
+
+        switch (CurrentPlayerTurn)
+        {
+            case 1:
+                playerName = "Blue";
+                break;
+
+            case 2:
+                playerName = "Green";
+                break;
+
+            case 3:
+                playerName = "Purple";
+                break;
+
+            case 4:
+                playerName = "Orange";
+                break;
+        }
+
+        GameMessageManager.Instance.ShowMessage(
+            $"نوبت بازیکن {playerName} است 🎲"
+        );
     }
 }

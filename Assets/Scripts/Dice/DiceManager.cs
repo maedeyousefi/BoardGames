@@ -79,8 +79,17 @@ public class DiceManager : MonoBehaviour
         rollButton.interactable = false; // 👈 دکمه رو قفل کن
 
         Debug.Log("Player rolled: " + lastRoll);
+
+        string playerName = GameMessageManager.Instance.GetPlayerName(
+            GameManager.Instance.CurrentPlayerTurn
+        );
+
+        GameMessageManager.Instance.ShowMessage(
+            $"{playerName} عدد {lastRoll} آورد 🎲"
+        );
+
         // چک کن آیا بازیکن فعلی می‌تواند به 100 برسد یا نه
-         PawnMover currentPawn = GameManager.Instance.GetCurrentPawn();
+        PawnMover currentPawn = GameManager.Instance.GetCurrentPawn();
         if (currentPawn != null && currentPawn.currentCell + lastRoll > 100) 
         { 
             Debug.Log($"بازیکن {currentPawn.playerNumber} عدد دقیق لازم دارد.");

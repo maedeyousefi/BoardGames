@@ -713,6 +713,7 @@ GameObject:
   - component: {fileID: 375813226}
   - component: {fileID: 375813225}
   - component: {fileID: 375813224}
+  - component: {fileID: 375813227}
   m_Layer: 5
   m_Name: FourPlayersButton
   m_TagString: Untagged
@@ -834,6 +835,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 375813222}
   m_CullTransparentMesh: 1
+--- !u!114 &375813227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375813222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
 --- !u!1 &462647017
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +861,7 @@ GameObject:
   - component: {fileID: 462647021}
   - component: {fileID: 462647020}
   - component: {fileID: 462647019}
+  - component: {fileID: 462647022}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -916,7 +932,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 462647020}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 634389932}
+        m_TargetAssemblyTypeName: PlayerSetupManager, Assembly-CSharp
+        m_MethodName: BackToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &462647020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,6 +983,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462647017}
   m_CullTransparentMesh: 1
+--- !u!114 &462647022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462647017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
 --- !u!1 &634389931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,6 +1191,7 @@ GameObject:
   - component: {fileID: 1150078208}
   - component: {fileID: 1150078207}
   - component: {fileID: 1150078206}
+  - component: {fileID: 1150078209}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -1270,6 +1313,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150078204}
   m_CullTransparentMesh: 1
+--- !u!114 &1150078209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150078204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
 --- !u!1 &1307140622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1473,7 @@ GameObject:
   - component: {fileID: 1313551958}
   - component: {fileID: 1313551957}
   - component: {fileID: 1313551956}
+  - component: {fileID: 1313551959}
   m_Layer: 5
   m_Name: ThreePlayersButton
   m_TagString: Untagged
@@ -1537,6 +1595,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313551954}
   m_CullTransparentMesh: 1
+--- !u!114 &1313551959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313551954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
 --- !u!1 &1436814862
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,6 +2097,7 @@ GameObject:
   - component: {fileID: 1753868949}
   - component: {fileID: 1753868948}
   - component: {fileID: 1753868947}
+  - component: {fileID: 1753868950}
   m_Layer: 5
   m_Name: TwoPlayersButton
   m_TagString: Untagged
@@ -2146,6 +2219,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753868945}
   m_CullTransparentMesh: 1
+--- !u!114 &1753868950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753868945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13a4217616838743a77c7949d4eaac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMultiplier: 1.05
+  smoothSpeed: 12
 --- !u!1 &1812130818
 GameObject:
   m_ObjectHideFlags: 0
