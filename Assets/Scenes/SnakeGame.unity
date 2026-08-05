@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.6666667}
+  m_Color: {r: 0.6313726, g: 0.019607844, b: 0.62352943, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -401,6 +401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winPanel: {fileID: 117391507}
   rankingText: {fileID: 1461741209}
+  panelTransform: {fileID: 117391508}
+  animationTime: 0.25
 --- !u!4 &509493996
 Transform:
   m_ObjectHideFlags: 0
@@ -3312,7 +3314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7431228, g: 0.38909933, b: 0.79622644, a: 1}
+  m_Color: {r: 0.762284, g: 0.6411178, b: 0.78113204, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

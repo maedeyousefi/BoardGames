@@ -1,4 +1,5 @@
 ﻿using TMPro;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,11 @@ public class WinPanelManager : MonoBehaviour
     [Header("UI")]
     public GameObject winPanel;
     public TMP_Text rankingText;
+
+    [Header("Animation")]
+    public RectTransform panelTransform;
+
+    public float animationTime = 0.25f;
 
     private void Awake()
     {
@@ -28,6 +34,8 @@ public class WinPanelManager : MonoBehaviour
     public void ShowWinPanel()
     {
         winPanel.SetActive(true);
+
+        StartCoroutine(AnimatePanel());
 
         AudioManager.Instance.PlaySound(AudioManager.Instance.win);
 
@@ -79,5 +87,37 @@ public class WinPanelManager : MonoBehaviour
         GameManager.Instance.ResetGameData();
         PawnMover.cellOccupants.Clear();
         SceneManager.LoadScene("MainMenu"); 
+    }
+    private IEnumerator AnimatePanel()
+    {
+        panelTransform.localScale = Vector3.zero;
+
+        float time = 0f;
+
+        while (time < animationTime)
+        {
+            float t = time / animationTime;
+
+            panelTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 1.1f, t);
+
+            time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        panelTransform.localScale = Vector3.one * 1.1f;
+
+        time = 0f;
+
+        while (time < 0.08f)
+        {
+            float t = time / 0.08f;
+
+            panelTransform.localScale = Vector3.Lerp(Vector3.one * 1.1f, Vector3.one, t);
+
+            time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        panelTransform.localScale = Vector3.one;
     }
 }
