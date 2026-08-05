@@ -96,11 +96,20 @@ public class PawnMover : MonoBehaviour, IPointerClickHandler
             }
 
             yield return StartCoroutine(MoveToPosition(targetPos));
+            AudioManager.Instance.PlaySound(AudioManager.Instance.pawnMove);
         }
 
         // بررسی مار یا نردبان
         if (SnakeAndLadderManager.Instance.TryGetDestination(currentCell, out int destination))
         {
+            if (SnakeAndLadderManager.Instance.snakes.Exists(x => x.startCell == currentCell))
+            {
+                AudioManager.Instance.PlaySound(AudioManager.Instance.snake);
+            }
+            if (SnakeAndLadderManager.Instance.ladders.Exists(x => x.startCell == currentCell))
+            {
+                AudioManager.Instance.PlaySound(AudioManager.Instance.ladder);
+            }
             // از خانه فعلی خارج شو
             UnregisterFromCell(currentCell);
             ArrangeCell(currentCell);

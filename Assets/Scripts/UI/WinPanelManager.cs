@@ -29,6 +29,8 @@ public class WinPanelManager : MonoBehaviour
     {
         winPanel.SetActive(true);
 
+        AudioManager.Instance.PlaySound(AudioManager.Instance.win);
+
         Time.timeScale = 0f;
 
         string result = "";

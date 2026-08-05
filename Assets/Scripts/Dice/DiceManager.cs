@@ -29,6 +29,8 @@ public class DiceManager : MonoBehaviour
     {
         if (isRolling) return;
 
+        AudioManager.Instance.PlaySound(AudioManager.Instance.diceRoll);
+
         StartCoroutine(RollAnimation());
     }
 
