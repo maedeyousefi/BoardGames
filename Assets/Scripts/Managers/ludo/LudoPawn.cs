@@ -1,5 +1,5 @@
 using UnityEngine;
-public enum PawnColor { Blue, Red, Green, Yellow }
+public enum PawnColor { Blue, Orange, Green, Purple }
 public class LudoPawn : MonoBehaviour 
 {
     [Header("Pawn Info")]
