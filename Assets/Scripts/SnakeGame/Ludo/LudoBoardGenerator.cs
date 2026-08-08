@@ -45,10 +45,38 @@ public class LudoBoardGenerator : MonoBehaviour
             RectTransform rt = cell.GetComponent<RectTransform>();
             rt.anchoredPosition = path[i] * scale;
             cell.name = $"Cell_{i:00}";
-            TMP_Text txt = cell.GetComponentInChildren<TMP_Text>();
+            LudoCell ludoCell = cell.GetComponent<LudoCell>(); if (ludoCell != null)
+            {
+                ludoCell.cellIndex = i;
+                
+                if (i == 0 || i == 13 || i == 27 || i == 41)
+                    ludoCell.isSafeCell = true;
+            }
+                TMP_Text txt = cell.GetComponentInChildren<TMP_Text>();
+
             if (txt != null)
-                txt.text = i.ToString(); 
+                txt.text = i.ToString();
+            UnityEngine.UI.Image img = cell.GetComponent<UnityEngine.UI.Image>();
+
+            if (img != null && ludoCell != null && ludoCell.isSafeCell)
+            {
+                img.color = new Color(1f, 0.9f, 0.3f); // زرد طلایی
+            }
         }
         Debug.Log("Ludo path generated!");
+    }
+    [ContextMenu("Fix Cell Indexes")] 
+    public void FixCellIndexes() 
+    { 
+        for (int i = 0; i < mainPath.childCount; i++) 
+        {
+            
+            LudoCell cell = mainPath.GetChild(i).GetComponent<LudoCell>();
+            if (cell != null)
+            { 
+                cell.cellIndex = i;
+            }
+        }
+        Debug.Log("Cell indexes fixed!");
     }
 }

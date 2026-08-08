@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2583274157431101348}
   - component: {fileID: 4873907815466121491}
   - component: {fileID: 2809554312364794894}
+  - component: {fileID: 5884783673449506981}
   m_Layer: 5
   m_Name: Cell
   m_TagString: Untagged
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382336766865816787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
@@ -93,6 +94,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &5884783673449506981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382336766865816787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ddb5accaeed0f246ad4946d9a231438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellIndex: 0
+  isSafeCell: 0
 --- !u!1 &8031231908140024769
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +119,7 @@ GameObject:
   - component: {fileID: 4108167409209648844}
   - component: {fileID: 6174256624988338895}
   - component: {fileID: 3785500835457236463}
+  - component: {fileID: 9056424581527909398}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -168,6 +184,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9056424581527909398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031231908140024769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &8243101589275401935
 GameObject:
   m_ObjectHideFlags: 0
