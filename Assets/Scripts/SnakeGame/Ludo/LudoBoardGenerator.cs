@@ -37,7 +37,7 @@ public class LudoBoardGenerator : MonoBehaviour
             new(320,0), new(280,0), new(240,0), new(200,-40),
             new(200,-80), new(200,-120), new(200,-160),
             new(200,-40),
-            new(160,-200), new(140,-220), new(120,-240)
+            new(160,-200), new(140,-220)
         };
         for (int i = 0; i < path.Length; i++) 
         { 
