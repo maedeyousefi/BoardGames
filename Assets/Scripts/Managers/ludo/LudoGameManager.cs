@@ -4,7 +4,9 @@ using UnityEngine;
 public class LudoGameManager : MonoBehaviour
 {
     public static LudoGameManager Instance;
+    public LudoPawn selectedPawn;
 
+    public int currentDiceValue;
     [Header("Players")]
     public int playerCount = 4;
     public int currentPlayer = 0;
@@ -55,8 +57,9 @@ public class LudoGameManager : MonoBehaviour
     {
         if (!pawn.isInBase) return;
         if (diceValue != 6) return;
-        int startCell = GetStartCell(pawn.pawnColor); 
-        pawn.EnterBoard(startCell, boardCells[startCell]);
+        int startCell = GetStartCell(pawn.pawnColor);
+        //pawn.EnterBoard(startCell, boardCells[startCell]);
+        StartCoroutine(pawn.MoveSteps(diceValue, boardCells));
         Debug.Log($"{pawn.pawnColor} entered the board at {startCell}");
     }
     private int GetStartCell(PawnColor color)
@@ -78,44 +81,63 @@ public class LudoGameManager : MonoBehaviour
         }
         return null;
     }
-    public void RollDice()
-    {
-        int diceValue = Random.Range(1, 7);
-        Debug.Log($"Dice: {diceValue}"); 
-        PawnColor currentColor = GetCurrentPlayerColor();
-        if (diceValue == 6)
-        {
-            LudoPawn pawn = GetFirstPawnInBase(currentColor); 
-            if (pawn != null)
-            {
-                TryEnterPawn(pawn, 6);
-                Debug.Log($"{currentColor} entered a pawn");
+    //public void RollDice()
+    //{
+      //  int diceValue = Random.Range(1, 7);
+        //Debug.Log($"Dice: {diceValue}"); 
+        //PawnColor currentColor = GetCurrentPlayerColor();
+     //   if (diceValue == 6)
+      //  {
+       //     LudoPawn pawn = GetFirstPawnInBase(currentColor); 
+       //     if (pawn != null)
+         //   {
+           //     TryEnterPawn(pawn, 6);
+             //   Debug.Log($"{currentColor} entered a pawn");
                 // با 6 نوبت حفظ می‌شود
-                 return;
-            } 
-        } // نوبت بعدی
-           NextTurn();
-    }
+               //  return;
+           // } 
+       // } // نوبت بعدی
+         //  NextTurn();
+  //  }
     public void DiceRolled(int diceValue)
     {
-        Debug.Log($"Player {GetCurrentPlayerColor()} rolled {diceValue}");
+        currentDiceValue = diceValue;
 
+        Debug.Log($"Saved Dice: {currentDiceValue}");
         PawnColor color = GetCurrentPlayerColor();
 
-        // اگر 6 آمد، یک مهره از خانه خارج شود
         if (diceValue == 6)
         {
             foreach (var pawn in allPawns)
             {
                 if (pawn.pawnColor == color && pawn.isInBase)
                 {
-                    TryEnterPawn(pawn, diceValue);
+                    int start = GetStartCell(color);
+
+                    pawn.EnterBoard(
+                        start,
+                        boardCells[start]
+                    );
+                    currentDiceValue = 0;
                     return;
                 }
             }
         }
 
-        // فعلاً بعد از تاس نوبت عوض شود
         NextTurn();
+    }
+    public void SelectPawn(LudoPawn pawn)
+    {
+        if (pawn.pawnColor != GetCurrentPlayerColor())
+        {
+            Debug.Log("این مهره نوبت شما نیست");
+            return;
+        }
+
+        selectedPawn = pawn;
+
+        Debug.Log(
+            $"Selected Pawn: {pawn.pawnColor} {pawn.pawnIndex}"
+        );
     }
 }
