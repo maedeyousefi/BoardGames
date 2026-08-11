@@ -10,7 +10,7 @@ public class LudoGameManager : MonoBehaviour
         WaitingPawn,
         Moving
     }
-
+    public float pawnSpreadRadius = 8f;
     public TurnState turnState = TurnState.DiceReady;
     public static LudoGameManager Instance;
     public LudoPawn selectedPawn;
@@ -166,10 +166,8 @@ public class LudoGameManager : MonoBehaviour
         if (pawn.isInBase && currentDiceValue == 6)
         {
             int start = GetStartCell(pawn.pawnColor);
-            pawn.EnterBoard(start, boardCells[start]);
-            currentDiceValue = 0;
-            turnState = TurnState.DiceReady;
-            dice.EnableRoll();       // تاس جایزه
+            turnState = TurnState.Moving;
+            StartCoroutine(EnterPawnAndFinish(pawn, start));
             return;
         }
 
@@ -183,20 +181,68 @@ public class LudoGameManager : MonoBehaviour
             StartCoroutine(MoveAndFinish(pawn, move, wasSix));
         }
     }
+    private IEnumerator EnterPawnAndFinish(LudoPawn pawn, int startCell)
+    {
+        yield return StartCoroutine(pawn.EnterBoardAnimated(startCell, boardCells[startCell]));
 
+        ArrangePawnsAt(startCell);
+        currentDiceValue = 0;
+        turnState = TurnState.DiceReady;
+        dice.EnableRoll();
+    }
     private IEnumerator MoveAndFinish(LudoPawn pawn, int steps, bool wasSix)
     {
+        int oldCell = pawn.currentCell;   // <-- خونه قبل از حرکت
+
         yield return StartCoroutine(pawn.MoveSteps(steps, boardCells));
+
+        ArrangePawnsAt(oldCell);          // <-- بقیه‌ی مهره‌های خونه قبلی دوباره وسط‌چین بشن
+        ArrangePawnsAt(pawn.currentCell); // <-- مهره‌های خونه جدید کنار هم بچینه
 
         turnState = TurnState.DiceReady;
         if (wasSix)
         {
-            dice.EnableRoll();       // جایزه دوباره، نوبت عوض نمیشه
+            dice.EnableRoll();
         }
         else
         {
             NextTurn();
             dice.EnableRoll();
+        }
+    }
+    public void ArrangePawnsAt(int cellIndex)
+    {
+        if (cellIndex < 0 || cellIndex >= boardCells.Length) return;
+
+        List<LudoPawn> pawnsHere = allPawns.FindAll(
+            p => !p.isInBase && !p.hasFinished && p.currentCell == cellIndex);
+
+        pawnsHere.Sort((a, b) =>
+        {
+            int c = a.pawnColor.CompareTo(b.pawnColor);
+            return c != 0 ? c : a.pawnIndex.CompareTo(b.pawnIndex);
+        });
+
+        if (pawnsHere.Count == 0) return;
+
+        RectTransform cellRt = boardCells[cellIndex].GetComponent<RectTransform>();
+        Vector2 basePos = cellRt.anchoredPosition;
+
+        if (pawnsHere.Count == 1)
+        {
+            pawnsHere[0].GetComponent<RectTransform>().anchoredPosition = basePos;
+            return;
+        }
+
+        int count = pawnsHere.Count;
+        for (int i = 0; i < count; i++)
+        {
+            float angle = (2 * Mathf.PI / count) * i - Mathf.PI / 2f;
+            Vector2 offset = new Vector2(
+                Mathf.Cos(angle) * pawnSpreadRadius,
+                Mathf.Sin(angle) * pawnSpreadRadius
+            );
+            pawnsHere[i].GetComponent<RectTransform>().anchoredPosition = basePos + offset;
         }
     }
 }
