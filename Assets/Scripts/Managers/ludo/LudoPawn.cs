@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public enum PawnColor { Blue, Orange, Green, Purple }
 public class LudoPawn : MonoBehaviour , IPointerClickHandler
 {
@@ -16,6 +17,7 @@ public class LudoPawn : MonoBehaviour , IPointerClickHandler
     public bool isInBase = true;
     public int currentCell = -1;
     public bool isSelected = false;
+    public Button rollButton;
 
     public void EnterBoard(int startCell, Transform targetCell)
     {
@@ -36,11 +38,9 @@ public class LudoPawn : MonoBehaviour , IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (isInBase)
-            return;
-
         LudoGameManager.Instance.SelectPawn(this);
     }
+   
     public IEnumerator MoveSteps(int steps, Transform[] cells)
     {
         for (int i = 0; i < steps; i++)
@@ -69,4 +69,5 @@ public class LudoPawn : MonoBehaviour , IPointerClickHandler
             yield return new WaitForSeconds(0.1f);
         }
     }
+  
 }

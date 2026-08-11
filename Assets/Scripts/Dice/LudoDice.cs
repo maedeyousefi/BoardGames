@@ -91,4 +91,12 @@ public class LudoDice : MonoBehaviour
 
         isRolling = false;
     }
+    public void EnableRoll()
+    {
+        rollButton.interactable = true;
+    }
+    public void DisableRoll()
+    {
+        rollButton.interactable = false;
+    }
 }
