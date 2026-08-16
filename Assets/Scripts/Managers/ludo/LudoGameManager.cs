@@ -23,6 +23,10 @@ public class LudoGameManager : MonoBehaviour
     public bool extraTurn = false;
     public bool waitingForPawn = false;
     public bool waitingForMove = false;
+    private static readonly int[] safeCells = { 0, 13, 27, 41 };
+
+
+
 
     [Header("Players Pawns")]
     public List<LudoPawn> allPawns = new List<LudoPawn>();
@@ -37,8 +41,8 @@ public class LudoGameManager : MonoBehaviour
     }
     private void Start()
     {
-        boardCells = new Transform[54]; 
-        for (int i = 0; i < 54; i++) 
+        boardCells = new Transform[55]; 
+        for (int i = 0; i < 55; i++) 
         {
             boardCells[i] = GameObject.Find($"Cell_{i:00}").transform;
         }
@@ -181,34 +185,30 @@ public class LudoGameManager : MonoBehaviour
             StartCoroutine(MoveAndFinish(pawn, move, wasSix));
         }
     }
+
+    private IEnumerator MoveAndFinish(LudoPawn pawn, int steps, bool wasSix)
+    {
+        int oldCell = pawn.currentCell;
+        yield return StartCoroutine(pawn.MoveSteps(steps, boardCells));
+
+        CheckCapture(pawn);          // <-- اضافه شد
+        ArrangePawnsAt(oldCell);
+        ArrangePawnsAt(pawn.currentCell);
+
+        turnState = TurnState.DiceReady;
+        if (wasSix) dice.EnableRoll();
+        else { NextTurn(); dice.EnableRoll(); }
+    }
+
     private IEnumerator EnterPawnAndFinish(LudoPawn pawn, int startCell)
     {
         yield return StartCoroutine(pawn.EnterBoardAnimated(startCell, boardCells[startCell]));
 
+        CheckCapture(pawn);          // <-- اضافه شد
         ArrangePawnsAt(startCell);
         currentDiceValue = 0;
         turnState = TurnState.DiceReady;
         dice.EnableRoll();
-    }
-    private IEnumerator MoveAndFinish(LudoPawn pawn, int steps, bool wasSix)
-    {
-        int oldCell = pawn.currentCell;   // <-- خونه قبل از حرکت
-
-        yield return StartCoroutine(pawn.MoveSteps(steps, boardCells));
-
-        ArrangePawnsAt(oldCell);          // <-- بقیه‌ی مهره‌های خونه قبلی دوباره وسط‌چین بشن
-        ArrangePawnsAt(pawn.currentCell); // <-- مهره‌های خونه جدید کنار هم بچینه
-
-        turnState = TurnState.DiceReady;
-        if (wasSix)
-        {
-            dice.EnableRoll();
-        }
-        else
-        {
-            NextTurn();
-            dice.EnableRoll();
-        }
     }
     public void ArrangePawnsAt(int cellIndex)
     {
@@ -244,5 +244,31 @@ public class LudoGameManager : MonoBehaviour
             );
             pawnsHere[i].GetComponent<RectTransform>().anchoredPosition = basePos + offset;
         }
+    }
+    public void CheckCapture(LudoPawn movedPawn)
+    {
+        if (IsSafeCell(movedPawn.currentCell))
+        {
+            Debug.Log("خونه امنه، هیچ Capture‌ای انجام نمیشه");
+            return;
+        }
+
+        List<LudoPawn> pawnsHere = allPawns.FindAll(
+            p => p != movedPawn && !p.isInBase && !p.hasFinished
+                 && p.currentCell == movedPawn.currentCell
+                 && p.pawnColor != movedPawn.pawnColor);
+
+        foreach (var enemyPawn in pawnsHere)
+        {
+            enemyPawn.SendHome();
+            Debug.Log($"{movedPawn.pawnColor} captured {enemyPawn.pawnColor}!");
+        }
+    }
+
+    public bool IsSafeCell(int cellIndex)
+    {
+        foreach (int c in safeCells)
+            if (c == cellIndex) return true;
+        return false;
     }
 }

@@ -18,6 +18,8 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
     public int currentCell = -1;
     public bool isSelected = false;
     public Button rollButton;
+    public Transform homeSlot; // موقعیت اصلی این مهره تو هوم، از Inspector وصلش کن
+
 
     public IEnumerator EnterBoardAnimated(int startCell, Transform targetCell)
     {
@@ -96,5 +98,18 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
             rt.anchoredPosition = end; // برای اطمینان دقیقاً روی خونه بشینه
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    
+    public void SendHome()
+    {
+        isInBase = true;
+        isInHome = true;
+        currentCell = -1;
+        pathIndex = -1;
+
+        RectTransform rt = GetComponent<RectTransform>();
+        transform.SetParent(homeSlot.parent, true);
+        rt.anchoredPosition = homeSlot.GetComponent<RectTransform>().anchoredPosition;
     }
 }

@@ -772,6 +772,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 914172466}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &78702873
 GameObject:
   m_ObjectHideFlags: 0
@@ -3166,6 +3169,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 1664387922}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &308273545
 GameObject:
   m_ObjectHideFlags: 0
@@ -5877,6 +5883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a238cfacc59ba5d4cb8faf4bcc12ef0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pawnSpreadRadius: 8
   turnState: 0
   selectedPawn: {fileID: 0}
   dice: {fileID: 1100637487}
@@ -5885,6 +5892,7 @@ MonoBehaviour:
   currentPlayer: 0
   extraTurn: 0
   waitingForPawn: 0
+  waitingForMove: 0
   allPawns:
   - {fileID: 887462376}
   - {fileID: 75970636}
@@ -7327,6 +7335,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 833369881}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &769117846
 GameObject:
   m_ObjectHideFlags: 0
@@ -8139,6 +8150,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 365723074}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &858024409
 GameObject:
   m_ObjectHideFlags: 0
@@ -8989,6 +9003,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 145799746}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &901716603
 GameObject:
   m_ObjectHideFlags: 0
@@ -10208,6 +10225,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 1748657716}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1084127235
 GameObject:
   m_ObjectHideFlags: 0
@@ -10534,7 +10554,7 @@ MonoBehaviour:
   bounceHeight: 50
   bounceCount: 3
   lastRoll: 0
-  rollButton: {fileID: 0}
+  rollButton: {fileID: 1100637488}
 --- !u!114 &1100637488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10726,6 +10746,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 1011292581}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1121882239
 GameObject:
   m_ObjectHideFlags: 0
@@ -13102,6 +13125,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 200363550}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1293611117
 GameObject:
   m_ObjectHideFlags: 0
@@ -14281,6 +14307,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 1091842004}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1379701055
 GameObject:
   m_ObjectHideFlags: 0
@@ -14587,6 +14616,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 1158190736}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1412008240
 GameObject:
   m_ObjectHideFlags: 0
@@ -14926,6 +14958,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 708987376}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1436223200
 GameObject:
   m_ObjectHideFlags: 0
@@ -15131,6 +15166,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 1084847505}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1450429424
 GameObject:
   m_ObjectHideFlags: 0
@@ -17699,6 +17737,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 427811212}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1710064169
 GameObject:
   m_ObjectHideFlags: 0
@@ -18464,6 +18505,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 1935254859}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &1784535010
 GameObject:
   m_ObjectHideFlags: 0
@@ -22233,6 +22277,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 266842890}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!1 &2066227337
 GameObject:
   m_ObjectHideFlags: 0
@@ -22606,6 +22653,9 @@ MonoBehaviour:
   currentCell: -1
   isSelected: 0
   rollButton: {fileID: 0}
+  homeSlot: {fileID: 833150688}
+  jumpHeight: 20
+  stepDuration: 0.25
 --- !u!114 &2098972823
 MonoBehaviour:
   m_ObjectHideFlags: 0
