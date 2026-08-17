@@ -175,7 +175,10 @@ public class LudoGameManager : MonoBehaviour
         foreach (var pawn in allPawns)
         {
             if (pawn.pawnColor == color && !pawn.isInBase && !pawn.hasFinished)
-                return true;
+            {
+                if (CanPawnMove(pawn, currentDiceValue))
+                    return true;
+            }
         }
         return false;
     }
@@ -207,6 +210,11 @@ public class LudoGameManager : MonoBehaviour
         // حرکت مهره‌ای که روی صفحه‌ست
         if (!pawn.isInBase && currentDiceValue > 0)
         {
+            if (!CanPawnMove(pawn, currentDiceValue))
+            {
+                Debug.Log("این مهره با این عدد تاس نمیتونه حرکت کنه (Final پر شده یا عدد زیاده)");
+                return;
+            }
             int move = currentDiceValue;
             bool wasSix = (move == 6);
             currentDiceValue = 0;
@@ -260,7 +268,7 @@ public class LudoGameManager : MonoBehaviour
         if (cellIndex < 0 || cellIndex >= boardCells.Length) return;
 
         List<LudoPawn> pawnsHere = allPawns.FindAll(
-            p => !p.isInBase && !p.hasFinished && p.currentCell == cellIndex);
+       p => !p.isInBase && !p.hasFinished && p.finalPathIndex < 0 && p.currentCell == cellIndex);
 
         pawnsHere.Sort((a, b) =>
         {
@@ -324,5 +332,31 @@ public class LudoGameManager : MonoBehaviour
         foreach (int c in safeCells)
             if (c == cellIndex) return true;
         return false;
+    }
+    public bool IsFinalCellOccupied(PawnColor color, int finalIndex, LudoPawn excludePawn)
+    {
+        foreach (var p in allPawns)
+        {
+            if (p == excludePawn) continue;
+            if (p.pawnColor == color && p.finalPathIndex == finalIndex)
+                return true;
+        }
+        return false;
+    }
+
+    public bool CanPawnMove(LudoPawn pawn, int steps)
+    {
+        if (!pawn.CanMoveWithDice(steps))
+            return false;
+
+        int targetIndex = pawn.GetTargetFinalIndex(steps);
+
+        if (targetIndex >= 0 && targetIndex < pawn.finalPath.Length)
+        {
+            if (IsFinalCellOccupied(pawn.pawnColor, targetIndex, pawn))
+                return false;
+        }
+
+        return true;
     }
 }

@@ -70,20 +70,6 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
 
         LudoGameManager.Instance.SelectPawn(this);
     }
-
-    private bool CanMoveToFinal(int steps)
-    {
-        int entryCell = GetFinalEntryCell();
-
-        // اگر هنوز به ورودی Final نرسیده، مشکلی نیست
-        if (currentCell != entryCell)
-            return true;
-
-        // تعداد خانه‌های باقی‌مانده Final
-        int remainingFinalSteps = finalPath.Length - 1 - finalPathIndex;
-
-        return steps <= remainingFinalSteps;
-    }
     public float jumpHeight = 20f;
     public float stepDuration = 0.25f;
 
@@ -150,6 +136,7 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
 
                     finalPathIndex = 0;
                     targetCell = finalPath[finalPathIndex];
+                    currentCell = -1;
 
                     transform.SetParent(targetCell.parent, true);
                     transform.SetAsLastSibling();
@@ -245,5 +232,38 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
     {
         finalPath = path;
         finalPathIndex = -1;
+    }
+    // چند قدم تا رسیدن به آخرین خونه‌ی Final مونده
+    public int GetRemainingFinalSteps()
+    {
+        if (finalPathIndex >= 0)
+            return (finalPath.Length - 1) - finalPathIndex;
+
+        if (currentCell == GetFinalEntryCell())
+            return finalPath.Length;
+
+        return -1; // هنوز ربطی به Final نداره
+    }
+
+    // فقط چک اورشوت (بدون چک تداخل)
+    public bool CanMoveWithDice(int steps)
+    {
+        int remaining = GetRemainingFinalSteps();
+
+        if (remaining == -1)
+            return true; // در Main Path محدودیتی نیست
+
+        return steps <= remaining;
+    }
+    // مهره با این عدد تاس، دقیقاً روی کدوم ایندکس Final میشینه
+    public int GetTargetFinalIndex(int steps)
+    {
+        if (finalPathIndex >= 0)
+            return finalPathIndex + steps;
+
+        if (currentCell == GetFinalEntryCell())
+            return steps - 1;
+
+        return -1;
     }
 }
