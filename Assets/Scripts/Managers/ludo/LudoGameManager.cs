@@ -10,6 +10,13 @@ public class LudoGameManager : MonoBehaviour
         WaitingPawn,
         Moving
     }
+    [Header("Final Paths")]
+    public Transform[] blueFinalPath;
+    public Transform[] orangeFinalPath;
+    public Transform[] greenFinalPath;
+    public Transform[] purpleFinalPath;
+
+
     public float pawnSpreadRadius = 8f;
     public TurnState turnState = TurnState.DiceReady;
     public static LudoGameManager Instance;
@@ -48,6 +55,28 @@ public class LudoGameManager : MonoBehaviour
         }
         Debug.Log($"Total Pawns: {allPawns.Count}");
         Debug.Log($"Current Turn: {GetCurrentPlayerColor()}");
+
+        foreach (LudoPawn pawn in allPawns)
+        {
+            switch (pawn.pawnColor)
+            {
+                case PawnColor.Blue:
+                    pawn.SetFinalPath(blueFinalPath);
+                    break;
+
+                case PawnColor.Orange:
+                    pawn.SetFinalPath(orangeFinalPath);
+                    break;
+
+                case PawnColor.Green:
+                    pawn.SetFinalPath(greenFinalPath);
+                    break;
+
+                case PawnColor.Purple:
+                    pawn.SetFinalPath(purpleFinalPath);
+                    break;
+            }
+        }
         // تست ورود یک مهره
         // TryEnterPawn(allPawns[0], 6);
         //RollDice();
@@ -189,15 +218,31 @@ public class LudoGameManager : MonoBehaviour
     private IEnumerator MoveAndFinish(LudoPawn pawn, int steps, bool wasSix)
     {
         int oldCell = pawn.currentCell;
-        yield return StartCoroutine(pawn.MoveSteps(steps, boardCells));
 
-        CheckCapture(pawn);          // <-- اضافه شد
-        ArrangePawnsAt(oldCell);
-        ArrangePawnsAt(pawn.currentCell);
+        yield return StartCoroutine(
+            pawn.MoveSteps(steps, boardCells)
+        );
+
+        CheckCapture(pawn);
+
+        // فقط وقتی مهره هنوز در MainPath است
+        if (pawn.finalPathIndex < 0)
+        {
+            ArrangePawnsAt(oldCell);
+            ArrangePawnsAt(pawn.currentCell);
+        }
 
         turnState = TurnState.DiceReady;
-        if (wasSix) dice.EnableRoll();
-        else { NextTurn(); dice.EnableRoll(); }
+
+        if (wasSix)
+        {
+            dice.EnableRoll();
+        }
+        else
+        {
+            NextTurn();
+            dice.EnableRoll();
+        }
     }
 
     private IEnumerator EnterPawnAndFinish(LudoPawn pawn, int startCell)
@@ -247,6 +292,11 @@ public class LudoGameManager : MonoBehaviour
     }
     public void CheckCapture(LudoPawn movedPawn)
     {
+        if (movedPawn.finalPathIndex >= 0)
+        {
+            return;
+        }
+
         if (IsSafeCell(movedPawn.currentCell))
         {
             Debug.Log("خونه امنه، هیچ Capture‌ای انجام نمیشه");
@@ -254,9 +304,13 @@ public class LudoGameManager : MonoBehaviour
         }
 
         List<LudoPawn> pawnsHere = allPawns.FindAll(
-            p => p != movedPawn && !p.isInBase && !p.hasFinished
-                 && p.currentCell == movedPawn.currentCell
-                 && p.pawnColor != movedPawn.pawnColor);
+            p => p != movedPawn &&
+                 !p.isInBase &&
+                 !p.hasFinished &&
+                 p.finalPathIndex < 0 &&
+                 p.currentCell == movedPawn.currentCell &&
+                 p.pawnColor != movedPawn.pawnColor
+        );
 
         foreach (var enemyPawn in pawnsHere)
         {
