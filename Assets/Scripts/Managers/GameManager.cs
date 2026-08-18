@@ -127,8 +127,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        GameMessageManager.Instance.ShowMessage(
-            $"نوبت بازیکن {playerName} است 🎲"
-        );
+      //  GameMessageManager.Instance.ShowMessage(
+       //     $"نوبت بازیکن {playerName} است 🎲"
+       // );
     }
 }

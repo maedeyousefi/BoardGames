@@ -56,6 +56,11 @@ public class LudoGameManager : MonoBehaviour
     }
     private void Start()
     {
+        //playerCount = PlayerPrefs.GetInt("PlayerCount", 4);
+        playerCount = GameManager.Instance.PlayerCount;
+        Debug.Log($"Ludo Player Count: {playerCount}");
+        SetupPlayers();
+
         boardCells = new Transform[55]; 
         for (int i = 0; i < 55; i++) 
         {
@@ -459,6 +464,35 @@ public class LudoGameManager : MonoBehaviour
             case 2: return PawnColor.Green;
             case 3: return PawnColor.Purple;
             default: return PawnColor.Blue;
+        }
+    }
+    private void SetupPlayers()
+    {
+        foreach (LudoPawn pawn in allPawns)
+        {
+            bool shouldBeActive = true;
+
+            switch (playerCount)
+            {
+                case 2:
+                    shouldBeActive =
+                        pawn.pawnColor == PawnColor.Blue ||
+                        pawn.pawnColor == PawnColor.Orange;
+                    break;
+
+                case 3:
+                    shouldBeActive =
+                        pawn.pawnColor == PawnColor.Blue ||
+                        pawn.pawnColor == PawnColor.Orange ||
+                        pawn.pawnColor == PawnColor.Green;
+                    break;
+
+                case 4:
+                    shouldBeActive = true;
+                    break;
+            }
+
+            pawn.gameObject.SetActive(shouldBeActive);
         }
     }
 
