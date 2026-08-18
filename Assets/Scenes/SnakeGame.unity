@@ -885,7 +885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceManager: {fileID: 1540649863}
-  currentCell: 95
+  currentCell: 1
   playerNumber: 3
   moveSpeed: 0.2
   hopHeight: 40
@@ -1399,7 +1399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceManager: {fileID: 1540649863}
-  currentCell: 98
+  currentCell: 1
   playerNumber: 2
   moveSpeed: 0.2
   hopHeight: 40

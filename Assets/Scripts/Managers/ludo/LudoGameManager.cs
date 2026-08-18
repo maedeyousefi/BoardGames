@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class LudoGameManager : MonoBehaviour
 {
@@ -24,6 +26,10 @@ public class LudoGameManager : MonoBehaviour
     public LudoDice dice;
 
     public int currentDiceValue;
+    [Header("UI")]
+    public GameObject rankingPanel;       // یه Panel تو Canvas بساز و اینجا وصل کن
+    public TMP_Text rankingText;              // یا TMP_Text اگه TextMeshPro استفاده می‌کنی
+
     [Header("Players")]
     public int playerCount = 4;
     public int currentPlayer = 0;
@@ -31,7 +37,9 @@ public class LudoGameManager : MonoBehaviour
     public bool waitingForPawn = false;
     public bool waitingForMove = false;
     private static readonly int[] safeCells = { 0, 13, 27, 41 };
-
+    [Header("Ranking")]
+    public List<PawnColor> finishedPlayersOrder = new List<PawnColor>();
+    public bool gameEnded = false;
 
 
 
@@ -94,11 +102,16 @@ public class LudoGameManager : MonoBehaviour
             default: return PawnColor.Blue;
         } 
     }
-    public void NextTurn() 
-    { 
-        currentPlayer++; 
-        if (currentPlayer >= playerCount) 
-            currentPlayer = 0; 
+    public void NextTurn()
+    {
+        do
+        {
+            currentPlayer++;
+            if (currentPlayer >= playerCount)
+                currentPlayer = 0;
+        }
+        while (finishedPlayersOrder.Contains(GetCurrentPlayerColor()));
+
         Debug.Log($"Current Turn: {GetCurrentPlayerColor()}");
     }
     public void TryEnterPawn(LudoPawn pawn, int diceValue)
@@ -174,7 +187,7 @@ public class LudoGameManager : MonoBehaviour
     {
         foreach (var pawn in allPawns)
         {
-            if (pawn.pawnColor == color && !pawn.isInBase && !pawn.hasFinished)
+            if (pawn.pawnColor == color && !pawn.isInBase)
             {
                 if (CanPawnMove(pawn, currentDiceValue))
                     return true;
@@ -232,6 +245,7 @@ public class LudoGameManager : MonoBehaviour
         );
 
         CheckCapture(pawn);
+        CheckPlayerFinished(pawn.pawnColor);
 
         // فقط وقتی مهره هنوز در MainPath است
         if (pawn.finalPathIndex < 0)
@@ -241,6 +255,11 @@ public class LudoGameManager : MonoBehaviour
         }
 
         turnState = TurnState.DiceReady;
+
+        if (gameEnded)
+        {
+            yield break;
+        }
 
         if (wasSix)
         {
@@ -346,17 +365,101 @@ public class LudoGameManager : MonoBehaviour
 
     public bool CanPawnMove(LudoPawn pawn, int steps)
     {
+        // اول اورشوت را چک کن
         if (!pawn.CanMoveWithDice(steps))
             return false;
 
+        // اگر مقصد داخل Final نیست، حرکت مجاز است
         int targetIndex = pawn.GetTargetFinalIndex(steps);
 
-        if (targetIndex >= 0 && targetIndex < pawn.finalPath.Length)
+        if (targetIndex < 0)
+            return true;
+
+        // اگر مقصد داخل Final است، نباید اشغال باشد
+        if (targetIndex < pawn.finalPath.Length)
         {
-            if (IsFinalCellOccupied(pawn.pawnColor, targetIndex, pawn))
+            if (IsFinalCellOccupied(
+                pawn.pawnColor,
+                targetIndex,
+                pawn))
+            {
+                Debug.Log(
+                    $"{pawn.pawnColor} Final_{targetIndex} اشغال است."
+                );
+
                 return false;
+            }
         }
 
         return true;
     }
+    private void CheckPlayerFinished(PawnColor color)
+    {
+        // اگه قبلاً تو لیست رتبه‌بندی بود، دیگه لازم نیست چک کنیم
+        if (finishedPlayersOrder.Contains(color))
+            return;
+
+        int finishedCount = allPawns.FindAll(
+            p => p.pawnColor == color && p.hasFinished).Count;
+
+        if (finishedCount == 4)
+        {
+            finishedPlayersOrder.Add(color);
+            Debug.Log($"{color} تمام مهره‌هاشو برد! رتبه: {finishedPlayersOrder.Count}");
+
+            CheckGameEnd();
+        }
+    }
+
+    private void CheckGameEnd()
+    {
+        if (gameEnded) return;
+
+        if (finishedPlayersOrder.Count >= playerCount - 1)
+        {
+            gameEnded = true;
+            Debug.Log("بازی تموم شد! پنل رتبه‌بندی باز میشه.");
+            ShowRankingPanel();
+        }
+    }
+    
+    private void ShowRankingPanel()
+    {
+        if (rankingPanel != null)
+            rankingPanel.SetActive(true);
+
+        string result = "نتیجه بازی:\n";
+        for (int i = 0; i < finishedPlayersOrder.Count; i++)
+        {
+            result += $"{i + 1}. {finishedPlayersOrder[i]}\n";
+        }
+
+        // آخرین نفر (کسی که تو لیست نیست) خودکار آخرین رتبه رو می‌گیره
+        for (int p = 0; p < playerCount; p++)
+        {
+            PawnColor c = IndexToColor(p);
+            if (!finishedPlayersOrder.Contains(c))
+            {
+                result += $"{finishedPlayersOrder.Count + 1}. {c} (آخر)\n";
+            }
+        }
+
+        if (rankingText != null)
+            rankingText.text = result;
+
+        Debug.Log(result);
+    }
+
+    private PawnColor IndexToColor(int index)
+    {
+        switch (index)
+        {
+            case 0: return PawnColor.Blue;
+            case 1: return PawnColor.Orange;
+            case 2: return PawnColor.Green;
+            case 3: return PawnColor.Purple;
+            default: return PawnColor.Blue;
+        }
+    }
+
 }

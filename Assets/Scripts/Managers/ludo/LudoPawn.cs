@@ -62,12 +62,6 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (hasFinished)
-        {
-            Debug.Log($"{pawnColor} Pawn {pawnIndex} already finished.");
-            return;
-        }
-
         LudoGameManager.Instance.SelectPawn(this);
     }
     public float jumpHeight = 20f;
@@ -77,20 +71,10 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
     {
         RectTransform rt = GetComponent<RectTransform>();
 
-        // اگر مهره روی ورودی Final است، بررسی کن عدد تاس کافی باشد
-        if (finalPathIndex == -1 && currentCell == GetFinalEntryCell())
+        if (!CanMoveWithDice(steps))
         {
-            int remainingSteps = finalPath.Length;
-
-            if (steps > remainingSteps)
-            {
-                Debug.Log(
-                    $"{pawnColor} - عدد تاس کافی نیست! " +
-                    $"تاس: {steps} | خانه‌های باقی‌مانده Final: {remainingSteps}"
-                );
-
-                yield break;
-            }
+            Debug.Log($"{pawnColor} - این حرکت اورشوت میشه، تاس کافی نیست.");
+            yield break;
         }
         for (int i = 0; i < steps; i++)
         {
@@ -135,6 +119,7 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
                     }
 
                     finalPathIndex = 0;
+                    hasFinished = true;
                     targetCell = finalPath[finalPathIndex];
                     currentCell = -1;
 
@@ -216,6 +201,54 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
 
         return -1;
     }
+    // فاصله (تعداد خونه) از موقعیت فعلی تا خونه‌ی ورودی Final
+    private int GetDistanceToEntry()
+    {
+        int entry = GetFinalEntryCell();
+        if (entry < 0) return -1;
+
+        return (entry - currentCell + 55) % 55;
+    }
+
+    // چند قدم تا رسیدن دقیق به آخرین خونه‌ی Final مونده
+    public int GetRemainingFinalSteps()
+    {
+        if (finalPathIndex >= 0)
+            return (finalPath.Length - 1) - finalPathIndex;
+
+        int distanceToEntry = GetDistanceToEntry();
+        return distanceToEntry + finalPath.Length;
+    }
+
+    // آیا با این عدد تاس اصلاً مجاز به حرکته؟ (نه اورشوت)
+    //public bool CanMoveWithDice(int steps)
+    //{
+     //   if (hasFinished) return false;
+
+      //  int remaining = GetRemainingFinalSteps();
+      //  return steps <= remaining;
+   // }
+    public bool CanMoveWithDice(int steps)
+    {
+        int remaining = GetRemainingFinalSteps();
+
+        if (remaining == -1)
+            return true;
+
+        return steps <= remaining;
+    }
+
+    // اگه این حرکت وارد Final بشه، دقیقاً روی کدوم ایندکس میشینه؟ (اگه هنوز وارد نشه، -1)
+    public int GetTargetFinalIndex(int steps)
+    {
+        if (finalPathIndex >= 0)
+            return finalPathIndex + steps;
+
+        if (currentCell == GetFinalEntryCell())
+            return steps - 1;
+
+        return -1;
+    }
 
     public void SendHome()
     {
@@ -232,38 +265,5 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
     {
         finalPath = path;
         finalPathIndex = -1;
-    }
-    // چند قدم تا رسیدن به آخرین خونه‌ی Final مونده
-    public int GetRemainingFinalSteps()
-    {
-        if (finalPathIndex >= 0)
-            return (finalPath.Length - 1) - finalPathIndex;
-
-        if (currentCell == GetFinalEntryCell())
-            return finalPath.Length;
-
-        return -1; // هنوز ربطی به Final نداره
-    }
-
-    // فقط چک اورشوت (بدون چک تداخل)
-    public bool CanMoveWithDice(int steps)
-    {
-        int remaining = GetRemainingFinalSteps();
-
-        if (remaining == -1)
-            return true; // در Main Path محدودیتی نیست
-
-        return steps <= remaining;
-    }
-    // مهره با این عدد تاس، دقیقاً روی کدوم ایندکس Final میشینه
-    public int GetTargetFinalIndex(int steps)
-    {
-        if (finalPathIndex >= 0)
-            return finalPathIndex + steps;
-
-        if (currentCell == GetFinalEntryCell())
-            return steps - 1;
-
-        return -1;
     }
 }
