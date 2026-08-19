@@ -27,8 +27,8 @@ public class LudoGameManager : MonoBehaviour
 
     public int currentDiceValue;
     [Header("UI")]
-    public GameObject rankingPanel;       // یه Panel تو Canvas بساز و اینجا وصل کن
-    public TMP_Text rankingText;              // یا TMP_Text اگه TextMeshPro استفاده می‌کنی
+    public GameObject rankingPanel;       
+    public TMP_Text rankingText; 
 
     [Header("Players")]
     public int playerCount = 4;
@@ -40,6 +40,9 @@ public class LudoGameManager : MonoBehaviour
     [Header("Ranking")]
     public List<PawnColor> finishedPlayersOrder = new List<PawnColor>();
     public bool gameEnded = false;
+
+
+    
 
 
 
@@ -427,32 +430,57 @@ public class LudoGameManager : MonoBehaviour
             ShowRankingPanel();
         }
     }
-    
+
     private void ShowRankingPanel()
     {
         if (rankingPanel != null)
             rankingPanel.SetActive(true);
 
-        string result = "نتیجه بازی:\n";
+        if (rankingText == null)
+            return;
+
+        string result = "🏆 رتبه‌بندی نهایی\n\n";
+
+        // بازیکن‌هایی که بازی را تمام کرده‌اند
         for (int i = 0; i < finishedPlayersOrder.Count; i++)
         {
-            result += $"{i + 1}. {finishedPlayersOrder[i]}\n";
+            result += $"{i + 1}. {GetPlayerName(finishedPlayersOrder[i])}\n";
         }
 
-        // آخرین نفر (کسی که تو لیست نیست) خودکار آخرین رتبه رو می‌گیره
-        for (int p = 0; p < playerCount; p++)
+        // بازیکن باقی‌مانده
+        for (int i = 0; i < playerCount; i++)
         {
-            PawnColor c = IndexToColor(p);
-            if (!finishedPlayersOrder.Contains(c))
+            PawnColor color = IndexToColor(i);
+
+            if (!finishedPlayersOrder.Contains(color))
             {
-                result += $"{finishedPlayersOrder.Count + 1}. {c} (آخر)\n";
+                result += $"{finishedPlayersOrder.Count + 1}. {GetPlayerName(color)}\n";
             }
         }
 
-        if (rankingText != null)
-            rankingText.text = result;
+        rankingText.text = result;
 
         Debug.Log(result);
+    }
+    private string GetPlayerName(PawnColor color)
+    {
+        switch (color)
+        {
+            case PawnColor.Blue:
+                return "Blue";
+
+            case PawnColor.Orange:
+                return "Orange";
+
+            case PawnColor.Green:
+                return "Green";
+
+            case PawnColor.Purple:
+                return "Purple";
+
+            default:
+                return color.ToString();
+        }
     }
 
     private PawnColor IndexToColor(int index)
@@ -494,6 +522,25 @@ public class LudoGameManager : MonoBehaviour
 
             pawn.gameObject.SetActive(shouldBeActive);
         }
+    }
+    public void ResetLudoGameData()
+    {
+        currentPlayer = 0;
+        currentDiceValue = 0;
+
+        selectedPawn = null;
+
+        extraTurn = false;
+        waitingForPawn = false;
+        waitingForMove = false;
+
+        turnState = TurnState.DiceReady;
+
+        finishedPlayersOrder.Clear();
+
+        gameEnded = false;
+
+        Debug.Log("Ludo game data reset.");
     }
 
 }

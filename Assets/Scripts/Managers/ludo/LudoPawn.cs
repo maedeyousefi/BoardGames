@@ -213,43 +213,93 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
     // چند قدم تا رسیدن دقیق به آخرین خونه‌ی Final مونده
     public int GetRemainingFinalSteps()
     {
+        // مهره داخل Final است
         if (finalPathIndex >= 0)
             return (finalPath.Length - 1) - finalPathIndex;
 
-        int distanceToEntry = GetDistanceToEntry();
+        int entryCell = GetFinalEntryCell();
+
+        // مهره دقیقاً روی ورودی Final است
+        if (currentCell == entryCell)
+            return finalPath.Length;
+
+        // فاصله تا ورودی Final روی مسیر اصلی
+        int pathLength = LudoGameManager.Instance.boardCells.Length;
+
+        int distanceToEntry =
+            (entryCell - currentCell + pathLength) % pathLength;
+
+        // هنوز به Final نرسیده
+        if (distanceToEntry <= 0)
+            return finalPath.Length;
+
+        // چند قدم از تاس بعد از رسیدن به Entry باقی می‌ماند
         return distanceToEntry + finalPath.Length;
     }
 
     // آیا با این عدد تاس اصلاً مجاز به حرکته؟ (نه اورشوت)
     //public bool CanMoveWithDice(int steps)
     //{
-     //   if (hasFinished) return false;
+    //   if (hasFinished) return false;
 
-      //  int remaining = GetRemainingFinalSteps();
-      //  return steps <= remaining;
-   // }
+    //  int remaining = GetRemainingFinalSteps();
+    //  return steps <= remaining;
+    // }
     public bool CanMoveWithDice(int steps)
     {
-        int remaining = GetRemainingFinalSteps();
+        int entryCell = GetFinalEntryCell();
+        int pathLength = LudoGameManager.Instance.boardCells.Length;
 
-        if (remaining == -1)
+        // مهره داخل Final است
+        if (finalPathIndex >= 0)
+        {
+            int targetIndex = finalPathIndex + steps;
+
+            return targetIndex < finalPath.Length;
+        }
+
+        // فاصله تا Entry
+        int distanceToEntry =
+            (entryCell - currentCell + pathLength) % pathLength;
+
+        // اگر تاس قبل یا دقیقاً روی Entry تمام می‌شود
+        if (steps <= distanceToEntry)
             return true;
 
-        return steps <= remaining;
+        // چند قدم بعد از Entry وارد Final می‌شود
+        int finalSteps = steps - distanceToEntry;
+
+        int targetFinalIndex = finalSteps - 1;
+
+        return targetFinalIndex < finalPath.Length;
     }
 
-    // اگه این حرکت وارد Final بشه، دقیقاً روی کدوم ایندکس میشینه؟ (اگه هنوز وارد نشه، -1)
     public int GetTargetFinalIndex(int steps)
     {
+        int entryCell = GetFinalEntryCell();
+        int pathLength = LudoGameManager.Instance.boardCells.Length;
+
+        // مهره از قبل داخل Final است
         if (finalPathIndex >= 0)
             return finalPathIndex + steps;
 
-        if (currentCell == GetFinalEntryCell())
+        // مهره روی Entry است
+        if (currentCell == entryCell)
             return steps - 1;
 
-        return -1;
-    }
+        // فاصله تا Entry
+        int distanceToEntry =
+            (entryCell - currentCell + pathLength) % pathLength;
 
+        // اگر هنوز به Final نمی‌رسد
+        if (steps <= distanceToEntry)
+            return -1;
+
+        // باقی حرکت‌ها داخل Final
+        int finalSteps = steps - distanceToEntry;
+
+        return finalSteps - 1;
+    }
     public void SendHome()
     {
         isInBase = true;

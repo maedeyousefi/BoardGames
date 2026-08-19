@@ -65,10 +65,10 @@ public class LudoBoardGenerator : MonoBehaviour
                 if (i == 0 || i == 13 || i == 27 || i == 41)
                     ludoCell.isSafeCell = true;
             }
-                TMP_Text txt = cell.GetComponentInChildren<TMP_Text>();
+                //TMP_Text txt = cell.GetComponentInChildren<TMP_Text>();
 
-            if (txt != null)
-                txt.text = i.ToString();
+            //if (txt != null)
+            //    txt.text = i.ToString();
             UnityEngine.UI.Image img = cell.GetComponent<UnityEngine.UI.Image>();
 
             if (img != null && ludoCell != null && ludoCell.isSafeCell)
