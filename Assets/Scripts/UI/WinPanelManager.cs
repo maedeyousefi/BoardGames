@@ -75,6 +75,12 @@ public class WinPanelManager : MonoBehaviour
         Time.timeScale = 1f;
 
         winPanel.SetActive(false);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySound(
+                AudioManager.Instance.buttonClick
+            );
+        }
         GameManager.Instance.ResetGameData();
         PawnMover.cellOccupants.Clear();
 
@@ -84,6 +90,13 @@ public class WinPanelManager : MonoBehaviour
     { 
         Time.timeScale = 1f;
         winPanel.SetActive(false);
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySound(
+                AudioManager.Instance.buttonClick
+            );
+        }
         GameManager.Instance.ResetGameData();
         PawnMover.cellOccupants.Clear();
         SceneManager.LoadScene("MainMenu"); 

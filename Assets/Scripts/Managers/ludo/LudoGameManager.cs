@@ -234,6 +234,14 @@ public class LudoGameManager : MonoBehaviour
             if (!CanPawnMove(pawn, currentDiceValue))
             {
                 Debug.Log("این مهره با این عدد تاس نمیتونه حرکت کنه (Final پر شده یا عدد زیاده)");
+
+                if (AudioManagerMe.Instance != null)
+                {
+                    AudioManagerMe.Instance.PlaySound(
+                        AudioManagerMe.Instance.error
+                    );
+                }
+
                 return;
             }
             int move = currentDiceValue;
@@ -282,6 +290,12 @@ public class LudoGameManager : MonoBehaviour
 
     private IEnumerator EnterPawnAndFinish(LudoPawn pawn, int startCell)
     {
+        if (AudioManagerMe.Instance != null)
+        {
+            AudioManagerMe.Instance.PlaySound(
+                AudioManagerMe.Instance.pawnEnter
+            );
+        }
         yield return StartCoroutine(pawn.EnterBoardAnimated(startCell, boardCells[startCell]));
 
         CheckCapture(pawn);          // <-- اضافه شد
@@ -350,6 +364,14 @@ public class LudoGameManager : MonoBehaviour
         foreach (var enemyPawn in pawnsHere)
         {
             enemyPawn.SendHome();
+
+            if (AudioManagerMe.Instance != null)
+            {
+                AudioManagerMe.Instance.PlaySound(
+                    AudioManagerMe.Instance.capture
+                );
+            }
+
             Debug.Log($"{movedPawn.pawnColor} captured {enemyPawn.pawnColor}!");
         }
     }
@@ -415,6 +437,13 @@ public class LudoGameManager : MonoBehaviour
             finishedPlayersOrder.Add(color);
             Debug.Log($"{color} تمام مهره‌هاشو برد! رتبه: {finishedPlayersOrder.Count}");
 
+            if (AudioManagerMe.Instance != null)
+            {
+                AudioManagerMe.Instance.PlaySound(
+                    AudioManagerMe.Instance.win
+                );
+            }
+
             CheckGameEnd();
         }
     }
@@ -433,6 +462,12 @@ public class LudoGameManager : MonoBehaviour
 
     private void ShowRankingPanel()
     {
+        if (AudioManagerMe.Instance != null)
+        {
+            AudioManagerMe.Instance.PlaySound(
+                AudioManagerMe.Instance.rankingOpen
+            );
+        }
         if (rankingPanel != null)
             rankingPanel.SetActive(true);
 

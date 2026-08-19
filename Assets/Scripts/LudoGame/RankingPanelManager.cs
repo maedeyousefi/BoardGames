@@ -10,6 +10,12 @@ public class RankingPanelManager : MonoBehaviour
     // Replay
     public void Replay()
     {
+        if (AudioManagerMe.Instance != null)
+        {
+            AudioManagerMe.Instance.PlaySound(
+                AudioManagerMe.Instance.buttonClick
+            );
+        }
         ResetGameData();
 
         SceneManager.LoadScene(gameSceneName);
@@ -18,6 +24,12 @@ public class RankingPanelManager : MonoBehaviour
     // Main Menu
     public void MainMenu()
     {
+        if (AudioManagerMe.Instance != null)
+        {
+            AudioManagerMe.Instance.PlaySound(
+                AudioManagerMe.Instance.buttonClick
+            );
+        }
         ResetGameData();
 
         SceneManager.LoadScene(mainMenuSceneName);

@@ -21,7 +21,15 @@ public class LudoDice : MonoBehaviour
 
     public void Roll()
     {
-        if (isRolling) return;
+        if (isRolling)
+            return;
+
+        if (AudioManagerMe.Instance != null)
+        {
+            AudioManagerMe.Instance.PlaySound(
+              AudioManagerMe.Instance.diceRoll
+           );
+        }
 
         StartCoroutine(RollAnimation());
     }
@@ -78,7 +86,12 @@ public class LudoDice : MonoBehaviour
 
         diceImage.sprite =
             diceFaces[lastRoll - 1];
-
+        if (AudioManagerMe.Instance != null)
+        {
+            AudioManagerMe.Instance.PlaySound(
+                AudioManagerMe.Instance.diceResult
+            );
+        }
 
         // برگشت صاف
         rt.rotation = Quaternion.identity;

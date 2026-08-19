@@ -151,6 +151,13 @@ public class LudoPawn : MonoBehaviour, IPointerClickHandler
             RectTransform target =
                 targetCell.GetComponent<RectTransform>();
 
+            if (AudioManagerMe.Instance != null)
+            {
+                AudioManagerMe.Instance.PlaySound(
+                    AudioManagerMe.Instance.pawnMove
+                );
+            }
+
             Vector3 start = rt.position;
             Vector3 end = target.position;
 

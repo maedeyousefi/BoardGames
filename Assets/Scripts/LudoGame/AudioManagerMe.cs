@@ -1,21 +1,26 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AudioManager : MonoBehaviour
+public class AudioManagerMe : MonoBehaviour
 {
-    public static AudioManager Instance;
-
+    public static AudioManagerMe Instance;
     [Header("Audio Source")]
     public AudioSource sfxSource;
 
-    [Header("SFX")]
+    [Header("Ludo SFX")]
     public AudioClip diceRoll;
+    public AudioClip diceResult;
     public AudioClip pawnMove;
-    public AudioClip snake;
-    public AudioClip ladder;
+    public AudioClip pawnEnter;
+    public AudioClip capture;
+    public AudioClip error;
     public AudioClip win;
-    public Slider volumeSlider;
+    public AudioClip rankingOpen;
+
     public AudioClip buttonClick;
+
+    [Header("Volume")]
+    public Slider volumeSlider;
 
     private void Awake()
     {
@@ -32,13 +37,16 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(AudioClip clip)
     {
-        if (clip != null)
-            sfxSource.PlayOneShot(clip);
+        if (sfxSource == null || clip == null)
+            return;
+
+        sfxSource.PlayOneShot(clip);
     }
+
     public void SetSFXVolume(float volume)
     {
-        Debug.Log("Volume = " + volume);
         sfxSource.volume = volume;
+
         PlayerPrefs.SetFloat("SFXVolume", volume);
         PlayerPrefs.Save();
     }
@@ -47,7 +55,8 @@ public class AudioManager : MonoBehaviour
     {
         float volume = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
-        sfxSource.volume = volume;
+        if (sfxSource != null)
+            sfxSource.volume = volume;
 
         if (volumeSlider != null)
             volumeSlider.value = volume;
