@@ -12,7 +12,9 @@ public class LudoGameManager : MonoBehaviour
         WaitingPawn,
         Moving
     }
-    public Transform pawnsParent;
+    [Header("Turn UI")]
+    public TMP_Text turnText;
+
     [Header("Final Paths")]
     public Transform[] blueFinalPath;
     public Transform[] orangeFinalPath;
@@ -62,6 +64,7 @@ public class LudoGameManager : MonoBehaviour
     {
         //playerCount = PlayerPrefs.GetInt("PlayerCount", 4);
         playerCount = GameManager.Instance.PlayerCount;
+        UpdateTurnText();
         Debug.Log($"Ludo Player Count: {playerCount}");
         SetupPlayers();
 
@@ -72,6 +75,7 @@ public class LudoGameManager : MonoBehaviour
         }
         Debug.Log($"Total Pawns: {allPawns.Count}");
         Debug.Log($"Current Turn: {GetCurrentPlayerColor()}");
+
 
         foreach (LudoPawn pawn in allPawns)
         {
@@ -122,6 +126,7 @@ public class LudoGameManager : MonoBehaviour
         while (finishedPlayersOrder.Contains(GetCurrentPlayerColor()));
 
         Debug.Log($"Current Turn: {GetCurrentPlayerColor()}");
+        UpdateTurnText();
     }
     public void TryEnterPawn(LudoPawn pawn, int diceValue)
     {
@@ -575,8 +580,38 @@ public class LudoGameManager : MonoBehaviour
         finishedPlayersOrder.Clear();
 
         gameEnded = false;
-
+        UpdateTurnText();
         Debug.Log("Ludo game data reset.");
+    }
+    private void UpdateTurnText()
+    {
+        if (turnText == null)
+            return;
+
+        PawnColor color = GetCurrentPlayerColor();
+
+        switch (color)
+        {
+            case PawnColor.Blue:
+                turnText.text = "نوبت بازیکن آبی ";
+                turnText.color = Color.blue;
+                break;
+
+            case PawnColor.Orange:
+                turnText.text = "نوبت بازیکن نارنجی ";
+                turnText.color = new Color(1f, 0.5f, 0f);
+                break;
+
+            case PawnColor.Green:
+                turnText.text = "نوبت بازیکن سبز ";
+                turnText.color = Color.green;
+                break;
+
+            case PawnColor.Purple:
+                turnText.text = "نوبت بازیکن بنفش ";
+                turnText.color = new Color(0.6f, 0.2f, 0.8f);
+                break;
+        }
     }
 
 }

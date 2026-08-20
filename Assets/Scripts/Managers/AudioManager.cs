@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
+    [Header("Music")]
+    public AudioSource musicSource;
 
     [Header("Audio Source")]
     public AudioSource sfxSource;
@@ -38,7 +40,13 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         Debug.Log("Volume = " + volume);
-        sfxSource.volume = volume;
+
+        if (sfxSource != null)
+            sfxSource.volume = volume;
+
+        if (musicSource != null)
+            musicSource.volume = volume;
+
         PlayerPrefs.SetFloat("SFXVolume", volume);
         PlayerPrefs.Save();
     }
