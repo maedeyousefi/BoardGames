@@ -474,7 +474,7 @@ public class LudoGameManager : MonoBehaviour
         if (rankingText == null)
             return;
 
-        string result = "🏆 رتبه‌بندی نهایی\n\n";
+        string result = " رتبه‌بندی نهایی\n\n";
 
         // بازیکن‌هایی که بازی را تمام کرده‌اند
         for (int i = 0; i < finishedPlayersOrder.Count; i++)
@@ -502,16 +502,16 @@ public class LudoGameManager : MonoBehaviour
         switch (color)
         {
             case PawnColor.Blue:
-                return "Blue";
+                return "ابی";
 
             case PawnColor.Orange:
-                return "Orange";
+                return "نارنجی";
 
             case PawnColor.Green:
-                return "Green";
+                return "سبز";
 
             case PawnColor.Purple:
-                return "Purple";
+                return "بنفش";
 
             default:
                 return color.ToString();

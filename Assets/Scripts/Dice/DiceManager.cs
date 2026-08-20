@@ -85,7 +85,7 @@ public class DiceManager : MonoBehaviour
         );
 
         GameMessageManager.Instance.ShowMessage(
-            $"{playerName} عدد {lastRoll} آورد 🎲"
+            $"{playerName} عدد {lastRoll} آورد "
         );
 
         // چک کن آیا بازیکن فعلی می‌تواند به 100 برسد یا نه

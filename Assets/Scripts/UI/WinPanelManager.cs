@@ -26,11 +26,13 @@ public class WinPanelManager : MonoBehaviour
     { 
         switch (player) 
         { 
-            case 1: return " Blue \n";
-            case 2: return " Green \n";
-            case 3: return " Purple \n";
-            case 4: return " Orange \n";
-            default: return "Player " + player; } }
+            case 1: return " ابی \n";
+            case 2: return " سبز \n";
+            case 3: return " بنفش \n";
+            case 4: return " نارنجی \n";
+            default: return "بازیکن " + player;
+        } 
+    }
     public void ShowWinPanel()
     {
         winPanel.SetActive(true);

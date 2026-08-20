@@ -21,13 +21,13 @@ public class GameMessageManager : MonoBehaviour
         switch (player)
         {
             case 1:
-                return " blue";
+                return " ابی";
             case 2:
-                return "green";
+                return "سبز";
             case 3:
-                return "purple";
+                return "بنفش";
             case 4:
-                return "orange";
+                return "نارنجی";
             default:
                 return "بازیکن";
         }

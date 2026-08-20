@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         {
             finishedPlayers.Add(playerNumber);
 
-            Debug.Log("Player " + playerNumber + " Finished!");
+            Debug.Log("بازیکن  " + playerNumber + " تمام شد!");
         }
     }
     public PawnMover GetCurrentPawn() 
@@ -111,19 +111,19 @@ public class GameManager : MonoBehaviour
         switch (CurrentPlayerTurn)
         {
             case 1:
-                playerName = "Blue";
+                playerName = "ابی";
                 break;
 
             case 2:
-                playerName = "Green";
+                playerName = "سبز";
                 break;
 
             case 3:
-                playerName = "Purple";
+                playerName = "بنفش";
                 break;
 
             case 4:
-                playerName = "Orange";
+                playerName = "نارنجی";
                 break;
         }
 
