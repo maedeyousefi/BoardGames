@@ -12,6 +12,7 @@ public class LudoGameManager : MonoBehaviour
         WaitingPawn,
         Moving
     }
+    public Transform pawnsParent;
     [Header("Final Paths")]
     public Transform[] blueFinalPath;
     public Transform[] orangeFinalPath;
